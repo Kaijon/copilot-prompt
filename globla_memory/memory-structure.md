@@ -1,0 +1,7 @@
+- Use user memory for cross-repo preferences and reusable engineering patterns; avoid repo-specific paths, filenames, or one-off incidents there.
+- Use repo memory for verified project-specific facts: build traps, service topology, package layout, scanner quirks, and deployment rules.
+- Use session memory only for active work; delete it when the task ends, or promote only the verified takeaways into user or repo memory.
+- Prefer one topic per memory file and short bullet facts over long plans, logs, or transcripts.
+- Name repo memory files as `<repo>-<topic>.md`; name user memory files by topic only.
+- Merge overlapping notes instead of keeping parallel files for the same component or workflow.
+- Save verified decisions, constraints, and failure traps; avoid storing speculative implementation plans unless they have durable reuse value.

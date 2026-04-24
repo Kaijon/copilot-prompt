@@ -1,0 +1,10 @@
+- Scope: this file captures how daemon dependency metadata should be modeled and emitted; scanner/cataloger behavior belongs in `canf22g2-sbom-daemons.md`.
+- For daemon library metadata enrichment, capture only each daemon's direct link libraries from its own build files; do not expand transitive dependencies in the first implementation.
+- Keep dependency extraction, `.pc` enrichment, and CycloneDX generation in `5_build_getac_daemon.sh` so all emitted metadata comes from the same packaging pass.
+- Use `getac_appSrc/DmesgMonitor/Makefile` as the standard `SHARED_LIBS` pattern and `getac_appSrc/webAssistant/src/Makefile` as the special-case `LIBS` pattern for vendored libraries.
+- Normalize linker tokens to package families before version lookup; keep the alias map explicit and small, for cases such as `ssl`/`crypto` -> `openssl` and `mosquitto`/`mosquittopp` -> `mosquitto`.
+- Resolve library versions with this priority: `webAssistant` vendored library/include names first, sysroot pkg-config second, Buildroot manifest fallback third, and `unknown` for external-toolchain items such as `pthread`.
+- Treat `CommonSrc` as an internal library and use `GETAC_DAEMON_PKG_VERSION` as its version until it gets an explicit version source.
+- Emit direct link flags in `Libs.private`, package-resolvable dependencies in `Requires.private`, and separate CycloneDX library components plus daemon-to-library dependency edges.
+- If a dependency cannot be versioned reliably, keep it visible as `unknown` and warn once rather than failing packaging.
+- Verify representative emitted outputs for a mosquitto-linked daemon, a `CommonSrc` consumer, and `webAssistant` before handing the artifacts to scanners.

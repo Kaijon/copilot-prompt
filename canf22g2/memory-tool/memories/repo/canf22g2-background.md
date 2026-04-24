@@ -1,0 +1,6 @@
+- Scope: this file captures `canf22g2` project-wide architecture, persistent storage layout, service roles, and cross-service startup dependencies; generic embedded-service patterns belong in user memory, and `goWeb` runtime/deployment details belong in `canf22g2-goWeb.md`.
+- Requirement: service design and deployment choices should align with CRA Security Design expectations.
+- External interfaces are `grpc` and `web`; internal daemon-to-daemon messaging goes through the MQTT broker.
+- Project is `canf22g2`; custom persistent partitions are `/mnt/getac` for daemon configs, keys, and board information, and `/mnt/flash` for logs.
+- Service roles: `goWeb` is the web server daemon, `grpcd` is the gRPC server daemon, and `fotad` handles firmware OTA.
+- Startup ordering matters: `mosquitto` must be available before `goWeb`, because internal daemons publish initialization state through MQTT and `goWeb` consumes that state at startup.

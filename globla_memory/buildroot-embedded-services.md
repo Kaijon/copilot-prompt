@@ -1,0 +1,8 @@
+- Scope: this file captures reusable embedded-service runtime patterns for Buildroot-like systems; project-specific topology and service rules belong in repo memory.
+- Buildroot and similar embedded targets often have no `sudo`; long-lived services communicating with external interfaces should run as dedicated non-root users.
+- Prefer the Buildroot users table as the source of truth for service accounts; runtime scripts should only prepare mutable state.
+- Use `/etc/init.d` for service lifecycle on Buildroot-style systems; keep root-only work limited to boot-time setup.
+- Keep shared boot preparation separate from service-specific startup logic.
+- For OTA-safe updates, stage replaceable application payloads into a runtime location and keep persistent config, log, and data paths separate.
+- Mixed ownership in shared log directories can be acceptable if directory permissions allow traversal and the service-owned log files are chowned explicitly.
+- In POSIX `sh` boot scripts, use `>/dev/null 2>&1` rather than Bash-only `&>`.

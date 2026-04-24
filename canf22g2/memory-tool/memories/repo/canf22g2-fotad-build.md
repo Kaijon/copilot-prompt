@@ -1,0 +1,2 @@
+- `fotad` is built in `getac_appSrc/fotad/src/` and the binary is `fotad/src/fotad`, not `fotad/fotad`.
+- `5_build_getac_daemon.sh` should copy the fotad binary from `fotad/src/fotad` to avoid TeamCity's daemon copy failure condition.

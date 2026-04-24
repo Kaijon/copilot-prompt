@@ -1,0 +1,10 @@
+- Scope: this file captures `goWeb`-specific runtime, deployment, and frontend asset-management rules; project-wide service topology belongs in `canf22g2-background.md`.
+- `goWeb` should run as the non-root `goweb` account from `BR2_ROOTFS_USERS_TABLES=board/vatics/leipzig/users.txt`.
+- Boot-time `goWeb` state lives under `/mnt/getac/persist/goweb`; keep `GOWEB_CONFIG_PATH`, `GOWEB_LOG_PATH`, `GOWEB_CERT_PEM`, and `GOWEB_CERT_KEY` pointed at that persistent area.
+- Use `GOWEB_HTTP_PORT=:8443` for non-root startup; keep any `:443` exposure outside the `goWeb` process.
+- Launch `goWeb` via `start-stop-daemon -c goweb:goweb` and set `umask 077` so config and key material stay owner-only.
+- `getac_appSrc/goweb/web` uses `package.json` plus `package-lock.json` as the source of truth for third-party browser dependencies.
+- `npm ci` and `npm install` should auto-sync runtime assets into `getac_appSrc/goweb/web/static/vendor/` via `postinstall`.
+- Templates should reference third-party assets only from `static/vendor`; the old manual copies in `static/css`, `static/js`, and `static/webfonts` are obsolete.
+- `5_build_getac_daemon.sh` should package already-synced `goWeb` static assets, exclude `node_modules`, and not run npm.
+- The old `web/sbom/web-deps.cdx.json` workflow is obsolete; Syft should discover `goWeb` web dependencies from `package-lock.json`.
