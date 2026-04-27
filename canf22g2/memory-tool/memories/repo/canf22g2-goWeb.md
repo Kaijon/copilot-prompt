@@ -8,3 +8,6 @@
 - Templates should reference third-party assets only from `static/vendor`; the old manual copies in `static/css`, `static/js`, and `static/webfonts` are obsolete.
 - `5_build_getac_daemon.sh` should package already-synced `goWeb` static assets, exclude `node_modules`, and not run npm.
 - The old `web/sbom/web-deps.cdx.json` workflow is obsolete; Syft should discover `goWeb` web dependencies from `package-lock.json`.
+- `web/static/subpage/*.html` are full HTML documents rather than plain fragments; `web/static/js/script.js` must parse them, inject body content only, apply subpage head styles, and execute scripts in order.
+- Avoid relative asset paths inside subpages; use `/static/...` URLs so standalone access and dynamic loading resolve the same assets.
+
